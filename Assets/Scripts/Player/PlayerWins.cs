@@ -1,14 +1,23 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
+using SnowSurfer.Helper;
+using System;
 
-public class PlayerWins : MonoBehaviour
+namespace SnowSurfer.Core
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class PlayerWins : MonoBehaviour
     {
-        if(collision.GetComponent<Win>())
+        public static event Action PlayerFinishesLevel;
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("You win!");
+            if (collision.GetComponent<Win>())
+            {
+                PlayerFinishesLevel?.Invoke();
+            }
         }
     }
 }
+

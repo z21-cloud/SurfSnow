@@ -2,23 +2,26 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public static class PlayerLocator
+namespace SnowSurfer.Helper
 {
-    private static GameObject player;
-    public static GameObject Player 
-    { 
-        get
+    public static class PlayerLocator
+    {
+        private static GameObject player;
+        public static GameObject Player
         {
-            if(player == null)
+            get
             {
-                player = GameObject.FindGameObjectWithTag("Player");
                 if (player == null)
-                    Debug.LogError("Player Locator: Can't find the player!");
+                {
+                    player = GameObject.FindGameObjectWithTag("Player");
+                    if (player == null)
+                        Debug.LogError("Player Locator: Can't find the player!");
+                }
+
+                return player;
             }
-
-            return player;
         }
-    }
 
-    public static void ClearCache() => player = null;
+        public static void ClearCache() => player = null;
+    }
 }

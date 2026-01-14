@@ -2,25 +2,31 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class InputManager : MonoBehaviour
+namespace SnowSurfer.Helper
 {
-    public static InputManager Instance { get; private set; }
-
-    private void Awake()
+    public class InputManager : MonoBehaviour
     {
-        if(Instance != null && Instance != this)
+        public static InputManager Instance { get; private set; }
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
         }
 
-        Instance = this;
-    }
+        public Vector2 GetInput()
+        {
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
+            return new Vector2(x, y);
+        }
 
-    public Vector2 GetInput()
-    {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        return new Vector2(x, y);
+        public bool Boost() => Input.GetKey(KeyCode.E);
     }
 }
+
